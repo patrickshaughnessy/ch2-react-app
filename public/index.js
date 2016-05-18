@@ -12,10 +12,14 @@ var Welcome = React.createClass({
 
 var Counter = React.createClass({
 
+  componentDidMount: function(){
+    console.log(this.props);
+  },
+
   render: function() {
     return (
       <div>
-        <h3>Counter 1: {this.props.counter}</h3>
+        <h3>Counter {this.props.id}: {this.props.counter}</h3>
         <button onClick={this.props.onAddClick}>+</button>
         <button onClick={this.props.onMinusClick}>-</button>
       </div>
@@ -26,7 +30,8 @@ var Counter = React.createClass({
 var Root = React.createClass({
   getInitialState: function(){
     return {
-      counter: 0
+      counter: 0,
+      counters: ['a', 'b', 'c']
     }
   },
 
@@ -40,14 +45,22 @@ var Root = React.createClass({
     this.setState({counter: this.state.counter - 1});
   },
 
+  addCounter: function(){
+
+  },
+
   render: function() {
+
     return (
       <div>
 
         <Welcome />
 
-        <Counter onAddClick={this.addCount} onMinusClick={this.minusCount} counter={this.state.counter} />
+        <button onClick={this.addCounter}>Add A Counter</button>
 
+        {this.state.counters.map((counter, idx) => {
+          return <Counter key={idx} id={idx} onAddClick={this.addCount} onMinusClick={this.minusCount} counter={this.state.counter} />
+        })}
 
       </div>
     )
