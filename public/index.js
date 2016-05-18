@@ -17,12 +17,16 @@ var Counter = React.createClass({
     }
   },
 
+  componentDidMount: function() {
+    console.log('counter props', this.props);
+  },
+
   render: function() {
     return (
       <div>
-        <h3>Counter 2: {this.state.counter}</h3>
-        <button onClick={() => this.setState({counter: this.state.counter + 1})}>+</button>
-        <button onClick={() => this.setState({counter: this.state.counter - 1})}>-</button>
+        <h3>Counter 2: {this.props.counter}</h3>
+        <button onClick={this.props.onAddClick}>+</button>
+        <button onClick={this.props.onMinusClick}>-</button>
       </div>
     )
   }
@@ -31,26 +35,18 @@ var Counter = React.createClass({
 var Root = React.createClass({
   getInitialState: function(){
     return {
-      counters: {
-        one: 0,
-        two: 0
-      }
+      counter: 0
     }
   },
 
-  addCount: function(event){
-    console.log('event', event.target)
-    var id = event.target.id
-    var newState = Object.create(this.state);
-    newState.counters[id]++;
-    this.setState(newState);
+  addCount: function(){
+    console.log('in root add count')
+    this.setState({counter: this.state.counter + 1});
   },
-  minusCount: function(arg, event){
-    console.log('arg', arg, 'event', event.target)
-    var key = arg;
-    var newState = Object.create(this.state);
-    newState.counters[key]--;
-    this.setState(newState)
+
+  minusCount: function(){
+    console.log('in root minus count')
+    this.setState({counter: this.state.counter - 1});
   },
 
   render: function() {
@@ -59,11 +55,11 @@ var Root = React.createClass({
 
         <Welcome />
 
-        <h3>Counter 1: {this.state.counters.one}</h3>
-        <button id="one" onClick={this.addCount}>+</button>
-        <button onClick={this.minusCount.bind(this, 'one')}>-</button>
+        <h3>Counter 1: {this.state.counter}</h3>
+        <button id="one" onClick={() => this.setState({counter: this.state.counter + 1})}>+</button>
+        <button onClick={() => this.setState({counter: this.state.counter - 1})}>-</button>
 
-        <Counter />
+        <Counter onAddClick={this.addCount} onMinusClick={this.minusCount} counter={this.state.counter} />
 
 
       </div>
