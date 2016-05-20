@@ -12,6 +12,12 @@ var Welcome = React.createClass({
 
 var Counter = React.createClass({
 
+  getInitialState: function(){
+    return {
+      counter: 0
+    }
+  },
+
   componentDidMount: function(){
     console.log(this.props);
   },
@@ -19,9 +25,10 @@ var Counter = React.createClass({
   render: function() {
     return (
       <div>
-        <h3>Counter {this.props.id + 1}: {this.props.counter}</h3>
-        <button onClick={this.props.onAddClick}>+</button>
-        <button onClick={this.props.onMinusClick}>-</button>
+        <h3>Counter {this.props.counter.id}: {this.state.counter}</h3>
+        <button onClick={() => this.setState({counter: this.state.counter + 1})}>+</button>
+        <button onClick={() => this.setState({counter: this.state.counter - 1})}>-</button>
+        <button onClick={() => this.props.onDelete(this.props.counter.id)}>Delete me</button>
       </div>
     )
   }
@@ -47,21 +54,28 @@ var Root = React.createClass({
 
   addCounter: function(){
     let counters = this.state.counters;
-    let nextCounterId = counters.length ? counters[counters.length-1] : 1;
+    let nextCounterId = counters.length + 1;
     this.setState({counters: this.state.counters.concat({id: nextCounterId})});
+  },
+
+  deleteCounter: function(id){
+    this.setState({counters: this.state.counters.filter(el => el.id !== id)})
   },
 
   render: function() {
 
     return (
       <div>
-
         <Welcome />
 
         <button onClick={this.addCounter}>Add A Counter</button>
 
         {this.state.counters.map((counter, idx) => {
-          return <Counter key={idx} id={idx} onAddClick={this.addCount} onMinusClick={this.minusCount} counter={this.state.counter} />
+          return <Counter key={idx}
+                          onDelete={this.deleteCounter}
+                          onAddClick={this.addCount}
+                          onMinusClick={this.minusCount}
+                          counter={counter} />
         })}
 
       </div>
