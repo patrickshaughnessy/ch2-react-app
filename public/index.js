@@ -19,7 +19,7 @@ var Counter = React.createClass({
   render: function() {
     return (
       <div>
-        <h3>Counter {this.props.id}: {this.props.counter}</h3>
+        <h3>Counter {this.props.id + 1}: {this.props.counter}</h3>
         <button onClick={this.props.onAddClick}>+</button>
         <button onClick={this.props.onMinusClick}>-</button>
       </div>
@@ -31,7 +31,7 @@ var Root = React.createClass({
   getInitialState: function(){
     return {
       counter: 0,
-      counters: ['a', 'b', 'c']
+      counters: []
     }
   },
 
@@ -46,7 +46,9 @@ var Root = React.createClass({
   },
 
   addCounter: function(){
-
+    let counters = this.state.counters;
+    let nextCounterId = counters.length ? counters[counters.length-1] : 1;
+    this.setState({counters: this.state.counters.concat({id: nextCounterId})});
   },
 
   render: function() {
