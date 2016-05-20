@@ -71,7 +71,7 @@ var Root = React.createClass({
         <button onClick={this.addCounter}>Add A Counter</button>
 
         {this.state.counters.map((counter, idx) => {
-          return <Counter key={idx}
+          return <Counter key={counter.id}
                           onDelete={this.deleteCounter}
                           onAddClick={this.addCount}
                           onMinusClick={this.minusCount}
