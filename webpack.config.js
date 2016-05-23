@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const NpmInstallPlugin = require('npm-install-webpack-plugin')
 
 module.exports = {
   entry: './public/index.js',
@@ -17,7 +16,4 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new NpmInstallPlugin(),
-  ]
 }

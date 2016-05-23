@@ -40,13 +40,14 @@ var Root = React.createClass({
   getInitialState: function(){
     return {
       counter: 0,
-      counters: []
+      counters: [],
+      index: 0
     }
   },
 
   addCount: function(){
     console.log('in root add count')
-    this.setState({counter: this.state.counter + 1});
+    this.setState({counter: this.state.counter + 2});
   },
 
   minusCount: function(){
@@ -56,8 +57,11 @@ var Root = React.createClass({
 
   addCounter: function(){
     let counters = this.state.counters;
-    let nextCounterId = counters.length + 1;
-    this.setState({counters: this.state.counters.concat({id: nextCounterId})});
+    let nextCounterId = this.state.index + 1;
+    this.setState({
+      counters: this.state.counters.concat({id: nextCounterId}),
+      index: nextCounterId
+    });
   },
 
   deleteCounter: function(id){
